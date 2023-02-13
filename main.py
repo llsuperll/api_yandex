@@ -16,20 +16,35 @@ class Window(Ui_Window, QMainWindow):
         self.map_l = "map"
         self.delta = 0.1
         self.refresh_map()
+        self.button_sat.clicked.connect(self.set_sat)
+        self.button_scheme.clicked.connect(self.set_map)
+        self.button_hybrid.clicked.connect(self.set_hybrid)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_PageUp and self.map_zoom < 17:
             self.map_zoom += 1
         if event.key() == Qt.Key_PageDown and self.map_zoom > 0:
             self.map_zoom -= 1
-        if event.key() == Qt.Key_Up:
+        if event.key() == Qt.Key_W:
             self.map_ll[1] += self.delta
-        if event.key() == Qt.Key_Down:
+        if event.key() == Qt.Key_S:
             self.map_ll[1] -= self.delta
-        if event.key() == Qt.Key_Left:
+        if event.key() == Qt.Key_A:
             self.map_ll[0] -= self.delta
-        if event.key() == Qt.Key_Right:
+        if event.key() == Qt.Key_D:
             self.map_ll[0] += self.delta
+        self.refresh_map()
+
+    def set_map(self):
+        self.map_l = "map"
+        self.refresh_map()
+
+    def set_sat(self):
+        self.map_l = "sat"
+        self.refresh_map()
+
+    def set_hybrid(self):
+        self.map_l = "skl"
         self.refresh_map()
 
     def refresh_map(self):
